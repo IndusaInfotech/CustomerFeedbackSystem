@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Contexts;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace Infrastructure.DbContexts
         {
         }
 
-       // public DbSet<Project> Projects { get; set; }
+        public DbSet<Project> Projects { get; set; }
 
         //public DbSet<ProjectTask> ProjectTasks { get; set; }
 
