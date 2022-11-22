@@ -37,6 +37,7 @@ namespace CustomerFeedbackSystem
             services.AddRepositories();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddRazorPages();
+            services.AddApplicationServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,0 +1,42 @@
+﻿@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ThankYou</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <style>
+        .card {
+            box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+            margin-bottom: 1rem;
+        }
+        h1{
+             padding-top:60px;
+             font-family: League Spartan, Clear Sans;
+        }
+        h5{
+            padding-bottom: 20px;
+            font-family: League Spartan, Clear Sans;
+        }
+        h4{
+            padding-bottom: 40px;
+            font-family: League Spartan, Clear Sans;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-3">
+        <div class="card">
+            <h1 class="text-center">Thank You!</h1>
+            <h5 class="text-center">Thanks for your Valuable feedback</h5>
+            @foreach (var survey in ViewBag.SurveyData){
+                <h4 class="text-center">@survey.Title</h4>
+            }
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,541 @@
+﻿@model Application.Request.QuestionInfo;
+
+<style>
+    .modal-title {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .modal-header {
+        border: none;
+    }
+
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .image1 {
+        float: left;
+        padding: 5px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+@{
+
+    long QuestionId = 0;
+
+    if (Model != null)
+    {
+        QuestionId = Model.Id;
+    }
+}
+
+<script>
+    $(document).ready(function () {
+
+        if (@QuestionId> 0) {
+
+            $("#exampleModal").modal('show');
+        }
+
+
+        $('#AnswerType').on('change', function () {
+            var d = this.value;
+            if (d == 1 || d == 7) {
+                $("#label").show();
+
+
+                $("#name").hide();
+                $("#text").hide();
+                $("#image").hide();
+                $("#type").hide();
+            }
+
+            else if (d == 2) {
+
+
+                $("#image").show();
+                $("#label").hide();
+                $("#name").hide();
+                $("#text").hide();
+
+                $("#type").hide();
+            }
+            else if (d == 3 || d == 4 || d == 5) {
+                $("#name").show();
+                $("#label").hide();
+                $("#image").hide();
+
+                $("#text").hide();
+
+                $("#type").hide();
+            }
+            else if (d == 6) {
+                $("#text").show();
+                $("#name").hide();
+                $("#label").hide();
+                $("#image").hide();
+
+
+
+                $("#type").hide();
+            }
+            else {
+                $("#label").hide();
+                $("#image").hide();
+                $("#name").hide();
+                $("#text").hide();
+
+                $("#type").show();
+            }
+        });
+    });
+</script>
+
+<div class="row mb-2">
+</div>
+
+<!--Start Form--->
+<!-- Content Header (Page header) -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+
+                    <div class="card-body">
+                        <h2 class="bg-light p-2">Survey Details</h2>
+
+                        @foreach (var item in ViewBag.SurveyData)
+                        {
+                            <p><b>Title:</b> @item.Title</p>
+                            <p><b>Description:</b> @item.Description</p>
+                            <p></p>
+                        }
+
+
+                        <p>No of Results: 0</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body ">
+
+                        <div class="row bg-light p-2">
+                            <div class="col">
+                                <h2>Survey Questionaire</h2>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-dark float-right" data-toggle="modal" data-target="#exampleModal">+ Add New Question</button>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Modal -->
+
+<div class="container-fluid">
+    <div class="modal fade" id="exampleModal">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title" id="exampleModalLabel">New Question</span>
+                    <button type="button" class="close float-right" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @* @using(Html.BeginForm("AddQuestion","Question",FormMethod.Post)){*@
+
+                <div class="modal-body">
+
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            @Html.HiddenFor(x=>x.Id)
+                            @Html.HiddenFor(x=>x.SurveyId)
+
+
+
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(x => x.Description,new { @class = "form-label"})
+
+
+                                @*<textarea class="form-control" name="" rows="3" id="exampleInputDescription" placeholder="Enter Description"></textarea>*@
+                                @Html.TextAreaFor( x=> x.Description, new { @class = "form-control", placeholder = "Enter Description..." ,required = "required"  })
+
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(x=>x.NumberOfPage,"Page Number",new { @class = "form-label"})
+                                @*<input type="text" class="form-control" id="exampleInputNoOfPage" placeholder="Enter Page">*@
+                                @Html.EditorFor(x=>x.NumberOfPage, new {htmlAttributes = new{@class = "form-control", placeholder = "Enter Page Number  ",required = "required"  }})
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(x=>x.AnswerType,"Answer Type",new { @class = "form-label"})
+                                @*<input type="text" class="form-control" id="exampleInputNoOfPage" placeholder="Enter Page">*@
+                                @Html.DropDownListFor(x=>x.AnswerType,new SelectList(ViewBag.AnswerType,"Value", "Text"), "Select", new{@class = "form-control",required = "required"  })
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <b>Preview</b>
+                            <div class="Preview">
+                                <div class="col-md-10" id="label" style="display: none;">
+                                    <div class="form-group">
+                                        <center class="bg-gray p-1 mb-2"><label for="label" class="form-label">Label </label></center>
+                                        <div class="table-responsive">
+                                            <table class="table " id="tblAnswer">
+
+                                                <tbody id="tbody">
+                                                    <tr>
+                                                        <td><input type="text" class="form-control" id="inputbox1" /></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><input type="text" class="form-control" id="inputbox2" /></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <center>
+                                            <button class="btn btn-md btn-primary"
+                                                    id="addBtn" type="button">
+                                                +
+                                            </button>
+                                        </center>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-10" id="image" style="display: none;">
+
+                                    <center class="bg-gray p-1 mb-2"> <h6>Image </h6></center>
+                                    <img src="~/dist/img/excellent.png" class="img-circle elevation-2" alt="User Image">  <hr>
+                                    <img src="~/dist/img/good.png" class="img-circle elevation-2" alt="User Image"> <hr>
+                                    <img src="~/dist/img/average.png" class="img-circle elevation-2" alt="User Image"> <hr>
+                                    <img src="~/dist/img/poor.png" class="img-circle elevation-2" alt="User Image">
+
+                                </div>
+                                <div class="col-md-8" id="name" style="display: none;">
+                                    <div class="form-group">
+                                        <input type="text" name="" class="form-control" placeholder="Name/Email/Mobile" disabled />
+                                    </div>
+                                </div>
+                                <div class="col-md-10" id="text" style="display: none;">
+                                    <div class="form-group">
+
+                                        <textarea class="form-control" rows="3" placeholder="Write Something here..." disabled></textarea>
+                                    </div>
+                                </div>
+
+
+                                <center id="type">
+                                    <b>Select Question Answer type.</b>
+                                </center>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="d-flex justify-content-end">
+
+                        <button type="button" class="btn btn-dark" id="btnSave">Save</button>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        // Denotes total number of rows
+        var rowIdx = 0;
+        var inputbox = 3;
+        // jQuery button click event to add a row
+        $('#addBtn').on('click', function () {
+
+            // Adding a row inside the tbody.
+            $('#tbody').append(`<tr id="R${++rowIdx}">
+
+                         <td class="row-index text-center">
+
+                         <input type="text" class="form-control" id="inputbox${inputbox++}">
+                         </td>
+
+                          <td class="text-center">
+                            <button class="btn  remove"
+                                  type="button"><i class="fa-solid fa-trash "   style="color:red;font-size:25px;"></i></button>
+                            </td>
+                          </tr>`);
+        });
+
+        // jQuery button click event to remove a row.
+        $('#tbody').on('click', '.remove', function () {
+
+            // Getting all the rows next to the row
+            // containing the clicked button
+            var child = $(this).closest('tr').nextAll();
+
+            // Iterating across all the rows
+            // obtained to change the index
+            child.each(function () {
+
+                // Getting <tr> id.
+                var id = $(this).attr('id');
+
+                // Getting the <p> inside the .row-index class.
+                var idx = $(this).children('.row-index').children('p');
+
+                // Gets the row number from <tr> id.
+                var dig = parseInt(id.substring(1));
+
+                // Modifying row index.
+                idx.html(`Row ${dig - 1}`);
+
+                // Modifying row id.
+                $(this).attr('id', `R${dig - 1}`);
+            });
+
+            // Removing the current row.
+            $(this).closest('tr').remove();
+
+            // Decreasing total number of rows by 1.
+            rowIdx--;
+        });
+    });
+
+    $("body").on("click", "#btnSave", function () {
+        var Id = $("#Id").val();
+        var SurveyId = $("#SurveyId").val();
+        var Description = $("#Description").val();
+
+        var NumberOfPage = $("#NumberOfPage").val();
+        var AnswerType = $("#AnswerType").val();
+        console.log(Id);
+        console.log(SurveyId);
+        console.log(Description);
+        console.log(NumberOfPage);
+        console.log(AnswerType);
+        //Loop through the Table rows and build a JSON array.
+        var Answer = new Array();
+        var i = 1;
+        var questionInfo;
+        if (AnswerType == 1 || AnswerType == 7) {
+            $("#tblAnswer TBODY TR").each(function () {
+                //var row = $(this);
+                var ans = {};
+
+                ans.OpetionText = $("#inputbox" + i).val();
+                i++;
+                Answer.push(ans);
+            });
+            console.log(Answer);
+            questionInfo = {
+                "Id": Id,
+                "SurveyId": SurveyId,
+                "Description": Description,
+                "NumberOfPage": NumberOfPage,
+                "AnswerType": AnswerType,
+                "answerInfos": Answer,
+            }
+        }
+        else {
+            questionInfo = {
+                "Id": Id,
+                "SurveyId": SurveyId,
+                "Description": Description,
+                "NumberOfPage": NumberOfPage,
+                "AnswerType": AnswerType,
+            }
+        }
+
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            type: "POST",
+            url: "/Question/AddQuestion",
+            data: questionInfo,
+            //   contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                alert(r + " record(s) inserted.");
+            }
+        })
+
+
+    });
+
+</script>
+
+
+
+<div class="row mb-2">
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-light">
+                        <h2 class="card-title ">QUESTIONS</h2>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Page Number</th>
+                                    <th>Answer Type</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.QuestionData)
+                                {
+                                    <tr>
+
+                                        <td>@item.Description</td>
+                                        <td>@item.NumberOfPage</td>
+
+
+                                        @if (@item.AnswerType == 1)
+                                        {
+                                            <td>
+                                                @foreach (var item2 in item.answerResonpes)
+                                                {
+                                                    
+                                                     @item2.OpetionText
+                                                   <br />
+
+                                                }
+                                            </td>
+                                        }
+                                        else if (item.AnswerType == 2)
+                                        {
+                                            <td>
+                                                <div class="row">
+                                                    <div class="image1">
+
+
+                                                        <img src="~/dist/img/excellent.png" class="img-circle elevation-2 img-fluid" alt="User Image">
+                                                    </div>
+                                                    <div class="image1">
+                                                        <img src="~/dist/img/good.png" class="img-circle elevation-2 img-fluid" alt="User Image">
+                                                    </div>
+                                                    <div class="image1">
+                                                        <img src="~/dist/img/average.png" class="img-circle elevation-2 img-fluid" alt="User Image">
+                                                    </div>
+                                                    <div class="image1">
+                                                        <img src="~/dist/img/poor.png" class="img-circle elevation-2 img-fluid" alt="User Image">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        }
+                                        else if (item.AnswerType == 3)
+                                        {
+                                            <td>
+                                                <input type="text" name="" class="form-control" placeholder="name" />
+                                            </td>
+                                        }
+                                        else if (item.AnswerType == 4)
+                                        {
+                                            <td> <input type="text" name="" class="form-control" placeholder="email" /></td>
+                                        }
+                                        else if (item.AnswerType == 5)
+                                        {
+                                            <td> <input type="text" name="" class="form-control" placeholder="mobile" /></td>
+                                        }
+                                        else if (item.AnswerType == 6)
+                                        {
+                                            <td> <textarea class="form-control" rows="1" placeholder="Write Something here..."></textarea></td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                @foreach (var item2 in item.answerResonpes)
+                                                {
+
+                                                    @item2.OpetionText
+                                                    <br />
+
+                                                }
+                                            </td>
+                                        }
+                                        <td>
+                                            <a href="/Question/AddQuestion?SurveyId=@TempData["SurveyId"]&questionId=@item.Id" id="Edit" title="Edit">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FF9800"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"></path></svg>
+
+                                            </a>
+
+                                            <a href="/Question/Delete?SurveyId=@TempData["SurveyId"]&Id=@item.Id" title="Delete Survey" onclick="return confirm('Are you sure you want to delete question :@item.Description')">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#D50000"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"></path></svg>
+
+                                            </a>
+
+
+
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

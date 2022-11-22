@@ -1,0 +1,168 @@
+﻿@model Application.Request.QuestionInfo; 
+
+<style>
+    .fa-sharp{
+        font-size:22px;
+        color:black;
+        margin-top:8px;
+    }
+   #example1 tbody{
+        font-size:15px;
+   }
+</style>
+
+<div class="row mb-2">
+    </div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                 <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           
+                           
+                            @Html.DropDownListFor(x=>x.AnswerType,new SelectList(ViewBag.Report,"Value", "Text"), "Choose Location", new{@class = "form-control" })
+                        </div>
+                     </div>
+                   
+                        <div class="col-md-5">
+                            <div class="d-flex justify-content-end">
+                            <div class="row">
+                                 <div class=" col-md-5">
+                                    <div class="form-group">
+                                        
+                                        @Html.EditorFor(x=>x.NumberOfPage, new {htmlAttributes = new{@class = "form-control", placeholder = "From Date" }})
+                                    </div>
+                                 </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+
+                                        @Html.EditorFor(x=>x.NumberOfPage, new {htmlAttributes = new{@class = "form-control", placeholder = "To Date" }})
+                                    </div>
+                                </div>
+                        <div class="col-8 col-md-2">
+                            <a class="reset remove" id="reset" href=""><i class="fa-sharp fa-solid fa-rotate-right"></i></a>
+                        </div>
+                            </div>
+                        </div>
+                        </div>
+                            
+
+                         
+                   
+                 </div>
+            
+
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+
+                                <th>Date</th>
+                                <th>Location</th>
+                                <th>Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                         
+                            <tr>
+                                <td>22-09-2022 12:43:18</td>
+                                <td>WGS-Reception</td>
+                                <td>Excellent</td>
+                            </tr>
+                            <tr>
+                                <td>22-09-2022 12:43:18</td>
+                                <td>WGS-Reception</td>
+                                <td>Excellent</td>
+                            </tr>
+                            <tr>
+                                <td>21-09-2022 17:44:18</td>
+                                <td>WGS-Reception</td>
+                                <td>Excellent</td>
+                            </tr> 
+                            <tr>
+                                <td>21-09-2022 17:22:45</td>
+                                <td>WGS-Reception</td>
+                                <td>Excellent</td>
+                            </tr>
+                            <tr>
+                                <td>21-09-2022 17:22:38</td>
+                                <td>WGS-Reception</td>
+                                <td>Excellent</td>
+                            </tr> 
+                            <tr>
+                                <td>21-09-2022 17:21:17</td>
+                                <td>WGS-Reception</td>
+                                <td>Average</td>
+                            </tr> 
+                            <tr>
+                                <td>21-09-2022 17:21:02</td>
+                                <td>WGS-Reception</td>
+                                <td>Average</td>
+                            </tr> 
+                            <tr>
+                                <td>21-09-2022 17:20:51</td>
+                                <td>WGS-Reception</td>
+                                <td>Bad</td>
+                            </tr>  
+                            <tr>
+                                <td>21-09-2022 17:20:45</td>
+                                <td>WGS-Reception</td>
+                                <td>Excellent</td>
+                            </tr>
+                            <tr>
+                                <td>21-09-2022 17:20:35</td>
+                                <td>WGS-Reception</td>
+                                <td>Bad</td>
+                            </tr>
+                            <tr>
+                                <td>21-09-2022 17:20:17</td>
+                                <td>WGS-Reception</td>
+                                <td>Good</td>
+                            </tr> 
+                            <tr>
+                                <td>16-09-2022 16:35:15</td>
+                                <td>WGS_WASHROOM</td>
+                                <td>Excellent</td>
+                            </tr>
+                            <tr>
+                                <td>16-09-2022 16:34:42</td>
+                                <td>WGS_WASHROOM</td>
+                                <td>Bad</td>
+                            </tr>
+                            <tr>
+                                <td>16-09-2022 16:34:00</td>
+                                <td>WGS_WASHROOM</td>
+                                <td>Excellent</td>
+                            </tr> 
+                            <tr>
+                                <td>16-09-2022 16:34:00</td>
+                                <td>WGS_WASHROOM</td>
+                                <td>Good</td>
+                            </tr>
+                            <tr>
+                                <td>16-09-2022 16:25:53</td>
+                                <td>WGS_WASHROOM</td>
+                                <td>Average</td>
+                            </tr> 
+                            <tr>
+                                <td>16-09-2022 16:39:17</td>
+                                <td>WGS_WASHROOM</td>
+                                <td>Bad</td>
+                            </tr> <tr>
+                                <td>16-09-2022 16:13:25</td>
+                                <td>WGS_WASHROOM</td>
+                                <td>Bad</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

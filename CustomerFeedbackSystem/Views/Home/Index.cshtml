@@ -1,8 +1,367 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+    }
+
+    .progress-thin {
+        height: 8px;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row mb-3"></div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card pb-5">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5>  <img src="~/dist/img/excellent.png" class="img-circle elevation-2" alt="User Image"></h5>
+                            </div>
+                            <div class="col">
+                                <h2>36</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card pb-5">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5>   <img src="~/dist/img/good.png" class="img-circle elevation-2" alt="User Image"> </h5>
+                            </div>
+                            <div class="col">
+                                <h2>13</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card pb-5">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5>    <img src="~/dist/img/average.png" class="img-circle elevation-2" alt="User Image"></h5>
+                            </div>
+                            <div class="col">
+                                <h2>8</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card pb-5">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5>    <img src="~/dist/img/poor.png" class="img-circle elevation-2" alt="User Image"></h5>
+                            </div>
+                            <div class="col">
+                                <h2>10</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h2 class="card-title">LAST 7 DAYS</h2>
+                </div>
+                <div class="card-body ">
+                    <div>
+                      <canvas id="myChart1"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h2 class="card-title">STATISTICS</h2>
+                </div>
+                <div class="card-body ">
+                   <div>
+                        <canvas id="myChart" ></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+    var xValues = ["Excellent", "Good", "Average", "Bad"];
+    var yValues = [36, 13, 8, 10];
+    var barColors = ["green", "lightgreen", "darkorange", "red"];
+
+    new Chart("myChart", {
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            legend: { display: false },
+
+        }
+    });
+</script>
+<script>
+    var xValues = ["Excellent", "Good", "Average", "Bad"];
+    var yValues = [36, 13, 8, 10,];
+    var barColors = [];
+
+    new Chart("myChart1", {
+        type: "bar",
+        data: {
+          
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            legend: { display: false },
+
+        }
+    });
+</script>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h2 class="card-title">Current Weekdays Vs Previous Weekdays</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row pb-4">
+                        <div class="col-4">
+                            <h6>Monday</h6>
+                        </div>
+                        <div class="col">
+                            <h6>No Data</h6>
+                        </div>
+                    </div>
+                    <div class="row pb-4">
+                        <div class="col-4">
+                            <h6>Tuesday</h6>
+                        </div>
+                        <div class="col">
+                            <h6>No Data</h6>
+                        </div>
+                    </div>
+                    <div class="row pb-4 ">
+                        <div class="col-4">
+                            <h6>Wednesday</h6>
+                        </div>
+                        <div class="col">
+                            <div class="progress progress-thin">
+                                <div class="progress-bar"></div>
+                            </div>
+                            <div class="progress progress-thin mt-2">
+                                <div class="progress-bar bg-success" style="width:50%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-4">
+                        <div class="col-4">
+                            <h6>Thursday</h6>
+                        </div>
+                        <div class="col">
+                            <div class="progress progress-thin">
+                                <div class="progress-bar"></div>
+                            </div>
+                            <div class="progress progress-thin mt-2">
+                                <div class="progress-bar bg-success" style="width:80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-4">
+                        <div class="col-4">
+                            <h6>Friday</h6>
+                        </div>
+                        <div class="col">
+                            <div class="progress progress-thin">
+                                <div class="progress-bar"></div>
+                            </div>
+                            <div class="progress progress-thin mt-2">
+                                <div class="progress-bar bg-success" style="width:70%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pb-4">
+                        <div class="col-4">
+                            <h6>Saturday</h6>
+                        </div>
+                        <div class="col">
+                            <h6>No Data</h6>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-4">
+                            <h6>Sunday</h6>
+                        </div>
+                        <div class="col">
+                            <h6>No Data</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h2 class="card-title">
+                        Recent Results
+                    </h2>
+                    <a href="" class="float-right">View All</a>
+                </div>
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-striped" style="font-size:13px">
+                        <thead>
+                            <tr>
+                                <th>Branch</th>
+                                <th>	Result</th>
+                                <th>Activity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>WGS-Reception</td>
+                                <td>Excellent</td>
+                                <td>38 days ago</td>
+                            </tr>
+                            <tr>
+                                <td>WGS-Reception</td>
+                                <td>Excellent</td>
+                                <td>38 days ago</td>
+                            </tr>
+                            <tr>
+                                <td>WGS-Reception</td>
+                                <td>Excellent</td>
+                                <td>39 days ago</td>
+                            </tr>
+                            <tr>
+                                <td>WGS-Reception</td>
+                                <td>Excellent</td>
+                                <td>39 days ago</td>
+                            </tr>
+                            <tr>
+                                <td>WGS-Reception</td>
+                                <td>Excellent</td>
+                                <td>39 days ago</td>
+                            </tr>
+                            <tr>
+                                <td>WGS-Reception</td>
+                                <td>Average</td>
+                                <td>39 days ago</td>
+                            </tr>
+                            <tr>
+                                <td>WGS-Reception</td>
+                                <td>Average</td>
+                                <td>39 days ago</td>
+                            </tr>
+                            <tr>
+                                <td>WGS-Reception</td>
+                                <td>Bad</td>
+                                <td>39 days ago</td>
+                            </tr>
+                            <tr>
+                                <td>WGS-Reception</td>
+                                <td>	Excellent</td>
+                                <td>39 days ago</td>
+                            </tr>
+                            <tr>
+                                <td>WGS-Reception</td>
+                                <td>Bad</td>
+                                <td>39 days ago</td>
+                            </tr>
+                            <tr>
+                                <td>WGS-Reception</td>
+                                <td>Excellent</td>
+                                <td>40 days ago</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h2 class="card-title">Current Week Vs Previous Week</h2>
+                </div>
+                <div class="card-body">
+                    <p>No Data</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h2 class="card-title">Current Month Vs Previous Month</h2>
+                </div>
+                <div class="card-body">
+                    <p>No Data</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h2 class="card-title">Customer Interaction Report</h2>
+                    <a href="" class="float-right">View All</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive ">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td> WGS_WASHROOM</td>
+                                    <td class="text-success">72 % POSITIVE</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

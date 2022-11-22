@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations.ApplicationDb
 {
-    public partial class FirstMigration : Migration
+    public partial class Answer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Projects",
+                name: "Answers",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -17,20 +17,20 @@ namespace Infrastructure.Migrations.ApplicationDb
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     LastModifiedBy = table.Column<string>(nullable: true),
                     LastModifiedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(maxLength: 50, nullable: false),
-                    Description = table.Column<string>(maxLength: 500, nullable: true),
-                    IsActive = table.Column<bool>(nullable: false)
+                    Type = table.Column<int>(nullable: false),
+                    QuestionId = table.Column<int>(nullable: false),
+                    OpetionText = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.PrimaryKey("PK_Answers", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Projects");
+                name: "Answers");
         }
     }
 }

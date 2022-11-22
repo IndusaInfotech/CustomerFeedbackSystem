@@ -1,6 +1,8 @@
 ﻿using Application.Interfaces.Repositories;
+using Application.Request;
 using Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,13 +22,30 @@ namespace Infrastructure.Repositories
 
         public async Task<T> AddAsync(T entity)
         {
+            
             await _dbContext.Set<T>().AddAsync(entity);
+            _dbContext.SaveChanges();
             return entity;
         }
+        public virtual async Task AddRangeAsync(IList<T> objs, bool saveChanges = true)
+        {
+            try
+            {
+                 _dbContext.AddRange(objs);
+                if (saveChanges)
+                    await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
+        }
 
-        public Task DeleteAsync(T entity)
+        public  Task DeleteAsync(T entity)
         {
             _dbContext.Set<T>().Remove(entity);
+            _dbContext.SaveChanges();
             return Task.CompletedTask;
         }
 
@@ -54,8 +73,19 @@ namespace Infrastructure.Repositories
 
         public Task UpdateAsync(T entity)
         {
-            _dbContext.Entry(entity).CurrentValues.SetValues(entity);
+            _dbContext.Entry(entity).State= EntityState.Modified;
+            //_dbContext.Entry(entity).CurrentValues.SetValues(entity);
+            _dbContext.SaveChanges();
             return Task.CompletedTask;
+        }
+
+        public Task UpdateAsync(SurveyInfo surveys)
+        {
+            throw new System.NotImplementedException();
+        }
+        public Task UpdateAsync(QuestionInfo question)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

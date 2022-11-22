@@ -1,0 +1,259 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    .card {
+        box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+        margin-bottom: 1rem;
+    }
+
+    .image1 {
+        margin: 10px;
+    }
+ div .card-footer{
+     border:none;
+ }
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha512-bnIvzh6FU75ZKxp0GXLH9bewza/OIw6dLVh9ICg0gogclmYGguQJWl8U30WpbsGTqbIiAwxTsbe76DErLq5EDQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    //$(document).ready(function(){
+    //    //var myRow=0;
+    //    //$(".nxtbtn").each(function(){
+    //    //    myRow=myRow+1;
+    //    //    $(this).attr("id", "nxtbtn" +myRow);
+    //    //});
+       
+      
+    //});
+
+</script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<html>
+<head>
+</head>
+<title></title>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Questions</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @{
+            var i = 0;
+        }
+        @foreach (var item in Model)
+        {
+            i++;
+            @if (@item.AnswerType == 1)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h5>@item.Description</h5>
+                            </div>
+                            <div class="card-body">
+                                @foreach (var item1 in item.answerResonpes)
+                                {
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" value="">@item1.OpetionText
+                                        <br>
+                                    </div>
+                                 
+                                }
+                                
+                             
+                            </div>
+                           @if(i<@ViewBag.AnswerData){
+                            <div class="card-footer bg-white text-right" >
+                                    <button type="button" class="btn btn-primary next">Next</button>
+                            </div>
+                           }
+                       
+                        </div>
+                    </div>
+                </div>
+                <ul>
+
+                </ul>
+            }
+            else if (item.AnswerType == 2)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card" >
+                            <div class="card-header bg-white">
+                                <h5>@item.Description</h5>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="image1">
+                                        <img src="~/dist/img/excellent.png" class="img-circle elevation-2 img-fluid" alt="User Image">
+                                    </div>
+                                    <div class="image1">
+                                        <img src="~/dist/img/good.png" class="img-circle elevation-2 img-fluid" alt="User Image">
+                                    </div>
+                                    <div class="image1">
+                                        <img src="~/dist/img/average.png" class="img-circle elevation-2 img-fluid" alt="User Image">
+                                    </div>
+                                    <div class="image1">
+                                        <img src="~/dist/img/poor.png" class="img-circle elevation-2 img-fluid" alt="User Image">
+                                    </div>
+                                </div>
+                            </div>
+
+                           @if (i< @ViewBag.AnswerData)
+                            {
+                                <div class="card-footer bg-white text-right">
+                                    <button type="button" class="btn  btn-primary next">Next</button>
+                                </div>
+                            }
+                         
+                        </div>
+                    </div>
+                </div>
+            }
+            else if (item.AnswerType == 3)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card" >
+                            <div class="card-header bg-white">
+                                <h5>@item.Description</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="col-sm-8">
+                                <input type="text" name="" class="form-control" placeholder="name" />
+                                </div>
+                            </div>
+                          @if (i< @ViewBag.AnswerData)
+                            {
+                              <div class="card-footer bg-white text-right">
+                                    <button type="button" class="btn  btn-primary next">Next</button>
+                             </div>
+                            }
+                        </div>
+                      
+                    </div>
+                </div>
+            }
+            else if (item.AnswerType == 4)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h5>@item.Description</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="col-sm-8">
+                                <input type="text" name="" class="form-control" placeholder="email" />
+                                </div>
+                            </div>
+                           @if (i< @ViewBag.AnswerData)
+                            {
+                                <div class="card-footer bg-white text-right">
+                                    <button type="button" class="btn  btn-primary next">Next</button>
+                                </div>
+                            }
+                        </div>
+                       
+                    </div>
+                </div>
+            }
+            else if (item.AnswerType == 5)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h5>@item.Description</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="col-sm-8">
+                                <input type="text" name="" class="form-control" placeholder="mobile" />
+                                </div>
+                            </div>
+                          @if (i< @ViewBag.AnswerData)
+                            {
+                                <div class="card-footer bg-white text-right">
+                                    <button type="button" class="btn btn-primary next">Next</button>
+                                </div>
+                            }
+                        </div>
+                       
+                    </div>
+                </div>
+            }
+            else if (item.AnswerType == 6)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card"  >
+                            <div class="card-header bg-white">
+                                <h5>@item.Description</h5>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="col-md-9 ">
+                                    <textarea class="form-control" rows="3" placeholder="@item.Description"></textarea>
+                                </div>
+                            </div>
+                          @if (i<@ViewBag.AnswerData)
+                            {
+                                <div class="card-footer bg-white text-right">
+                                    <button type="button" class="btn  btn-primary next">Next</button>
+                                </div>
+                            }
+                        </div>
+                       
+                    </div>
+                </div>
+            }
+            else
+            {
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header bg-white">
+                                <h5>@item.Description</h5>
+                            </div>
+                            <div class="card-body">
+
+                                @foreach (var item1 in item.answerResonpes)
+                                {
+                                    <div class="form-check">
+                                        <input type="radio" class="form-check-input" value="">@item1.OpetionText
+                                        <br>
+                                    </div>
+
+                                }
+                            </div>
+                            @if (i< @ViewBag.AnswerData)
+                            {
+                                <div class="card-footer bg-white text-right">
+                                    <button  type="button" class="btn  btn-primary next">Next</button>
+                                </div>
+                            }
+                        </div>
+                       
+                    </div>
+                </div>
+            
+            }
+          
+        }
+       
+    </div>
+</body>
+</html>

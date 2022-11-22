@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.Request;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +18,11 @@ namespace Application.Interfaces.Repositories
         Task<List<T>> GetPagedReponseAsync(int pageNumber, int pageSize);
 
         Task<T> AddAsync(T entity);
+       Task AddRangeAsync(IList<T> objs, bool saveChanges = true);
 
         Task UpdateAsync(T entity);
 
         Task DeleteAsync(T entity);
+        Task UpdateAsync(SurveyInfo surveys);
     }
 }

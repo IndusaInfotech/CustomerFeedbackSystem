@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class MyMigration : Migration
+    public partial class identityuser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

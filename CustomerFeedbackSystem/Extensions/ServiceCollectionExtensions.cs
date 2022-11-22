@@ -1,5 +1,7 @@
-﻿using Infrastructure.DbContexts;
+﻿using Application.Interfaces.Repositories;
+using Infrastructure.DbContexts;
 using Infrastructure.Identity;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -51,6 +53,15 @@ namespace CustomerFeedbackSystem.Extensions
                .AddDefaultTokenProviders()
                .AddDefaultUI()
                .AddEntityFrameworkStores<IdentityContext>();
+        }
+
+        internal static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        {
+            services.AddTransient<ISurveyRepository, SurveyRepository>();
+            services.AddTransient<IQuestionRepository, QuestionRepository>();
+            services.AddTransient<IAnswerRepository, AnswerRepository>();
+
+            return services;
         }
     }
 }
