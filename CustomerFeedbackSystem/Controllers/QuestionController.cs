@@ -1,10 +1,12 @@
 ﻿using Application.Interfaces.Repositories;
 using Application.Request;
+using AspNetCoreHero.Results;
 using AutoMapper;
 using Domain.Entities;
 using EllipticCurve;
 using Infrastructure.Migrations.ApplicationDb;
 using Infrastructure.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -14,6 +16,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using Answer = Domain.Entities.Answer;
 using Question = Domain.Entities.Question;
+using ResultInfo = Domain.Entities.ResultInfo;
 
 namespace CustomerFeedbackSystem.Controllers
 {
@@ -22,14 +25,16 @@ namespace CustomerFeedbackSystem.Controllers
         private readonly IQuestionRepository _questionRepository;
         private readonly ISurveyRepository _surveyRepository;
         private readonly IAnswerRepository _answerRepository;
+        private readonly IResultRepository _reultRepository;
         public object SurveyId { get; private set; }
         public object Data { get; private set; }
 
-        public QuestionController(IQuestionRepository questionRepository, ISurveyRepository surveyRepositor,IAnswerRepository answerRepository)
+        public QuestionController(IQuestionRepository questionRepository, IResultRepository resultRepository, ISurveyRepository surveyRepositor,IAnswerRepository answerRepository)
         {
             _questionRepository = questionRepository;
             _surveyRepository = surveyRepositor;
             _answerRepository = answerRepository;
+            _reultRepository = resultRepository;
           
         }
 
@@ -216,6 +221,7 @@ namespace CustomerFeedbackSystem.Controllers
         
             var data = questions.OrderBy(x => x.NumberOfPage);
             ViewBag.AnswerData = data.Count();
+            ViewBag.SId = SurveyId;
             return View(data);
            
 
@@ -233,6 +239,20 @@ namespace CustomerFeedbackSystem.Controllers
             var Survey = _surveyRepository.GetListAsync().Result.Where(x => x.Id == SurveyId);
             ViewBag.SurveyData = Survey;
             return View();
+        }
+
+        public IActionResult SaveAnswer(ResultInfos result)
+        {
+
+            ResultInfo result1 = new ResultInfo();
+            result1.AnswerId = result.AnswerId;
+            result1.QuestionId = result.QuestionId;
+            result1.CreatedOn = DateTime.Now;
+            var Data = _reultRepository.InsertAsync(result1);
+            return new JsonResult(new { message = "Error Messages" })
+            {
+                StatusCode = StatusCodes.Status400BadRequest
+            };
         }
 
 

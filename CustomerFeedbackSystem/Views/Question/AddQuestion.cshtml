@@ -360,23 +360,20 @@
 
         var NumberOfPage = $("#NumberOfPage").val();
         var AnswerType = $("#AnswerType").val();
-        console.log(Id);
-        console.log(SurveyId);
-        console.log(Description);
-        console.log(NumberOfPage);
-        console.log(AnswerType);
-        //Loop through the Table rows and build a JSON array.
+               
         var Answer = new Array();
         var i = 1;
         var questionInfo;
         if (AnswerType == 1 || AnswerType == 7) {
             $("#tblAnswer TBODY TR").each(function () {
-                //var row = $(this);
+                
                 var ans = {};
-
+                if ($("#inputbox" + i).val()!="")
+                {
                 ans.OpetionText = $("#inputbox" + i).val();
                 i++;
                 Answer.push(ans);
+                }
             });
             console.log(Answer);
             questionInfo = {

@@ -60,6 +60,7 @@ namespace CustomerFeedbackSystem.Extensions
             services.AddTransient<ISurveyRepository, SurveyRepository>();
             services.AddTransient<IQuestionRepository, QuestionRepository>();
             services.AddTransient<IAnswerRepository, AnswerRepository>();
+            services.AddTransient<IResultRepository, ResultRepository>();
 
             return services;
         }
