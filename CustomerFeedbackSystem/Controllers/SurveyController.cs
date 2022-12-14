@@ -19,13 +19,15 @@ namespace CustomerFeedbackSystem.Controllers
 
       
         private readonly ISurveyRepository _surveyRepository;
+        private readonly IResultRepository _reultRepository;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public SurveyController(ISurveyRepository surveyRepository, IWebHostEnvironment hostEnvironment)
+        public SurveyController(ISurveyRepository surveyRepository, IResultRepository reultRepository, IWebHostEnvironment hostEnvironment)
         {
             _surveyRepository = surveyRepository;
            
             webHostEnvironment = hostEnvironment;
+            _reultRepository= reultRepository;
 
         }
 
@@ -66,6 +68,7 @@ namespace CustomerFeedbackSystem.Controllers
             survey.Images = uniqueFileName;
             survey.IsActive = surveyInfo.IsActive;
             survey.CreatedOn = DateTime.Now;
+            survey.Location = surveyInfo.Location;
             survey.Id = surveyInfo.Id;
             if (surveyInfo.Id == 0)
             {
@@ -114,8 +117,35 @@ namespace CustomerFeedbackSystem.Controllers
             return View();
         }
 
-   
-     
-    
+
+        public IActionResult Reports(ReportRequest request)
+        {
+           
+            if (request.SurveyName != null)
+            {
+                var Survey = _surveyRepository.GetListAsync().Result.Where(x=>x.Name.Contains(request.SurveyName)).FirstOrDefault();
+                var result = _reultRepository.GetListAsync().Result.Where(x => x.SurveyId == Survey.Id.ToString());
+                return View(result);
+
+            }
+            else if (request.Location != null)
+            {
+                var   Survey = _surveyRepository.GetListAsync().Result.Where(x => x.Name == request.Location).FirstOrDefault();
+                if (Survey != null)
+                {
+                    var result = _reultRepository.GetListAsync().Result.Where(x => x.SurveyId == Survey.Id.ToString());
+                    return View(result);
+                }
+
+            }
+            else if(request.StartDate !=null && request.EndDate !=null)
+            {
+                var result = _reultRepository.GetListAsync().Result.Where(x => x.CreatedOn.Date <= request.StartDate.Date && x.CreatedOn>= request.EndDate.Date);
+                return View(result);
+            }
+
+            return View();
+        }
+
     }
 }

@@ -4,14 +4,16 @@ using Infrastructure.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations.ApplicationDb
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221207091355_surveyResults")]
+    partial class surveyResults
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,9 +145,6 @@ namespace Infrastructure.Migrations.ApplicationDb
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("GuidId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -155,14 +154,8 @@ namespace Infrastructure.Migrations.ApplicationDb
                     b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
-                    b.Property<string>("QuestionText")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("QuestionType")
                         .HasColumnType("int");
-
-                    b.Property<string>("SurveyId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

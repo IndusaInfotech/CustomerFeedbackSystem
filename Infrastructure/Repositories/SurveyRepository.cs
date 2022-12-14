@@ -38,6 +38,7 @@ namespace Infrastructure.Repositories
             survey.Title = data.Title;
             survey.NumberOfPage = data.NumberOfPage;
             survey.IsActive = data.IsActive;
+            survey.Location = data.Location;
 
             return survey;
         }

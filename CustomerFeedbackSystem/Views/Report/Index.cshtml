@@ -1,1 +1,89 @@
 ﻿
+ 
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+window.onload = function () {
+            var date = new Date();
+            var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+            var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+         
+
+            var now = new Date();
+
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
+
+            var Fday = ("0" + firstDay.getDate()).slice(-2);
+            var Fmonth = ("0" + (firstDay.getMonth()+1)).slice(-2);
+            var firstDay1 = firstDay.getFullYear() + "-" + (Fmonth)+"-"+(Fday);
+            document.getElementById("StartDate").value = firstDay1;
+            document.getElementById("EndDate").value = today;
+var chart = new CanvasJS.Chart("chartContainer", {
+	title: {
+		text: "Report"
+	},
+	axisY: {
+		title: "Survey Report"
+	},
+	data: [{
+		type: "column",
+		yValueFormatString: "#,##0.00",
+		indexLabel: "{y}",
+		dataPoints: @Html.Raw(ViewBag.DataPoints)
+	}]
+});
+			
+function updateChart() {
+	var deltaY, yVal;
+	var dps = chart.options.data[0].dataPoints;
+	for (var i = 0; i < dps.length; i++) {
+		deltaY = (1 + Math.random() * (-1 - 1)) * 0.1 * dps[i].y;
+		yVal = deltaY + dps[i].y > 0 ? dps[i].y + deltaY : 0;
+		dps[i].y = yVal;
+	}
+	chart.options.data[0].dataPoints = dps;
+	chart.render();
+};
+updateChart();
+ 
+setInterval(function () { updateChart() }, 2000);
+ 
+}
+</script>
+</head>
+<body>
+
+    <div class="card">
+        <div class="card-header">Filter</div>
+        <div class="card-body">
+
+            @using (Html.BeginForm("Reports", "Survey", FormMethod.Post))
+            {
+                <div class="row">
+                   
+                    <div class="col-2">
+                        <input type="date" class="form-control" id="StartDate" name="StartDate" />
+                    </div>
+                    <div class="col-2"> 
+                        <input type="date" class="form-control" name="EndDate"  id="EndDate"/>
+                    </div>
+                    <div class="col-2">
+                        <input type="submit" class="form-control" value="Search" class="btn btn-primary" />
+                    </div>
+                </div>
+            }
+
+
+        </div>
+        <div class="card-footer">
+        </div>
+    </div>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</body>
+</html>   

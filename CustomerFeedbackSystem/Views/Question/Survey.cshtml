@@ -26,68 +26,190 @@ div .DivDisplay{
     
    
    });
+    var AnswerText = "";
+    var  GuidId ="";
+    function getValue(AnswerTextVal){
+        AnswerText =AnswerTextVal;
+    }
 var DivShow = function(j){
 
            
-     $("#div"+j).hide();
-     $("#div"+(j+1)).show();
+   
      //j++;
      var AnswerType = $("#hidd"+j).val();
+     var quesId = $("#qid"+j).val();
+        var quesText = $("#QuesT" + j).val();
+    
      if(AnswerType == 1){
 
-            var AnswerText = $("#Radio" + j).val();
+          //   AnswerText = $("#Radio" + j).val();
      }
      if(AnswerType == 2){
 
-            var AnswerText = $("#Image"+j).val();
+             //AnswerText = $("#Image"+j).val();
      }
 
     if(AnswerType==3)
     {
 
-        var AnswerText = $("#Name"+j).val();
+         AnswerText = $("#Name"+j).val();
     }
         if (AnswerType == 4) {
 
-            var AnswerText = $("#Email"+j).val();
+             AnswerText = $("#Email"+j).val();
         }
         if(AnswerType == 5){
 
-            var AnswerText = $("#Mobile"+j).val();
+             AnswerText = $("#Mobile"+j).val();
 
         }
         if(AnswerType == 6){
 
-            var AnswerText = $("#Description"+j).val();
+             AnswerText = $("#Description"+j).val();
 
         }
         if(AnswerType == 7){
 
-            var AnswerText = $("#CheckBox"+j).val();
+             AnswerText = "";
+            var status ="";
+
+            var array = [];
+            $("input:checkbox[name=type]:checked").each(function() {
+                array.push($(this).val());
+               
+            });
+            for(i=0;i<array.length;i++)
+            {
+                status = status + array[i] +",";
+            }
+            AnswerText = status;
+            //$("input[type=checkbox]:checked").each(function () {
+            //     status = (this.checked ? $(this).val() : "");
+            //     if(status!="")
+            //     {
+            //         status = status + ",";
+            //     }
+            //});
+
+            console.log(array);
         }
-    //var result;
-    //    result = {
-    //        "Id": Id,
-    //        "SurveyId": SurveyId,
-    //        "Description": Description,
-    //        "NumberOfPage": NumberOfPage,
-    //        "AnswerType": AnswerType,
-    //        "answerInfos": Answer,
-    //    }
-    //$.ajax({
-    //        type: "POST",
-    //        url: "/Question/SaveAnswer",
-    //        data: result,
-    //        dataType: "json",
-    //        success: function (r) {
-    //            alert(r + " record(s) inserted.");
-    //        }
-    //})
+
+        result = {
+            //"Id": Id,
+            "SurveyId": @ViewBag.SId,
+                "AnswerText": AnswerText,
+            "QuestionType": AnswerType,
+            "QuestionId": quesId,
+            "GuidId": GuidId,
+            "QuestionText":quesText
+                //"NumberOfPage": NumberOfPage,
+                //"AnswerType": AnswerType,
+                //"answerInfos": Answer,
+            }
+        $.ajax({
+            type: "POST",
+            url: "/Question/SaveAnswer",
+            data: result,
+            dataType: "json",
+            success: function (r) {
+                GuidId = r.message;
+                $("#div" + j).hide();
+                $("#div" + (j + 1)).show();
+            }
+        })
+
+     
 }
-   var submit = function(){
-       var d = @ViewBag.SId;
-        window.location.replace("/Question/ThankYou?SurveyId="+d);
+//Final submit  
+   var result;
+   var submit = function (j) {
+          //j++;
+     var AnswerType = $("#hidd"+j).val();
+     var quesId = $("#qid"+j).val();
+     var quesText = $("#QuesT" + j).val();
+    
+       if(AnswerType == 1){
+
+          //   AnswerText = $("#Radio" + j).val();
+       }
+       if(AnswerType == 2){
+
+             //AnswerText = $("#Image"+j).val();
+       }
+
+        if(AnswerType==3)
+        {
+
+         AnswerText = $("#Name"+j).val();
+        }
+        if (AnswerType == 4) {
+
+             AnswerText = $("#Email"+j).val();
+        }
+        if(AnswerType == 5){
+
+             AnswerText = $("#Mobile"+j).val();
+
+        }
+        if(AnswerType == 6){
+
+             AnswerText = $("#Description"+j).val();
+
+        }
+        if(AnswerType == 7){
+
+             AnswerText = "";
+            var status ="";
+
+            var array = [];
+            $("input:checkbox[name=type]:checked").each(function() {
+                array.push($(this).val());
+               
+            });
+            for(i=0;i<array.length;i++)
+            {
+                status = status + array[i] +",";
+            }
+            AnswerText = status;
+            //$("input[type=checkbox]:checked").each(function () {
+            //     status = (this.checked ? $(this).val() : "");
+            //     if(status!="")
+            //     {
+            //         status = status + ",";
+            //     }
+            //});
+
+            console.log(array);
+        }
+
+        result = {
+            //"Id": Id,
+            "SurveyId": @ViewBag.SId,
+                "AnswerText": AnswerText,
+            "QuestionType": AnswerType,
+            "QuestionId": quesId,
+            "GuidId": GuidId,
+            "QuestionText":quesText
+                //"NumberOfPage": NumberOfPage,
+                //"AnswerType": AnswerType,
+                //"answerInfos": Answer,
+            }
+        $.ajax({
+            type: "POST",
+            url: "/Question/SaveAnswer",
+            data: result,
+            dataType: "json",
+            success: function (r) {
+                GuidId = r.message;
+                $("#div" + j).hide();
+                $("#div" + (j + 1)).show();
+            }
+        })
+        var d = @ViewBag.SId;
+        window.location.replace("/Question/ShowResult?Guied=" + GuidId + "&Survey=" + d);
    }
+
+  
 </script>
 
 
@@ -112,6 +234,13 @@ var DivShow = function(j){
             var idn = "div";
             var btn = "btn";
             var hidd = "hidd";
+            var quesid = "qid";
+            var Description = "Description";
+            var Name = "Name";
+            var Email = "Email";
+            var Mobile = "Mobile";
+            var Div = "Div";
+            var QuesT = "QuesT";
         }
         @foreach (var item in Model)
         {
@@ -120,6 +249,14 @@ var DivShow = function(j){
             idn = "div" + i;
             btn = "btn" + i;
             hidd = "hidd" + i;
+            quesid = "qid" + i;
+            QuesT = "QuesT" + i;
+            Description = "Description" + i;
+            Name = "Name" + i;
+            Email = "Email" + i;
+            Mobile = "Mobile" + i;
+            Div = Div + i;
+            <input type="hidden" id=@QuesT value="@item.Description" />
             @if (@item.AnswerType == 1)
             {
                 <input type="hidden" id=@hidd value="@item.AnswerType" />
@@ -127,17 +264,18 @@ var DivShow = function(j){
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header bg-white">
+                                <input type="hidden" id=@quesid value="@item.Id" />
+                               
                                 <h5>@item.Description</h5>
                             </div>
                             <div class="card-body">
                                 @foreach (var item1 in item.answerResonpes)
                                 {
                                      <div class="form-check">
-                                        <input type="radio" id="Radio" class="form-check-input" value="">@item1.OpetionText
+                                        <input type="radio" id="Radio" name="radio" class="form-check-input" onclick="getValue('@item1.OpetionText')">@item1.OpetionText
                                         <br>
                                      </div>
                                   
-                                 
                                 }
                                 
                              
@@ -149,7 +287,7 @@ var DivShow = function(j){
                            }
                             else{
                                <div class="card-footer bg-white text-right">
-                                    <button type="button" onclick="submit()" class="btn  btn-primary" id="smt">Submit</button>
+                                    <button type="button" onclick="submit(@i)" class="btn  btn-primary" id="smt">Submit</button>
                                 </div>
                             }
                        
@@ -166,21 +304,22 @@ var DivShow = function(j){
                         <div class="card" >
                             <div class="card-header bg-white">
                                 <h5>@item.Description</h5>
+                                <input type="hidden" id=@quesid value="@item.Id" />
                             </div>
                             <div class="card-body">
 
                                 <div class="row">
                                     <div class="image1">
-                                        <img src="~/dist/img/excellent.png" id="Image" class="img-circle elevation-2 img-fluid" alt="User Image">
+                                        <img src="~/dist/img/excellent.png" id="Image" onclick="getValue('excellent')" class="img-circle elevation-2 img-fluid" alt="User Image">
                                     </div>
                                     <div class="image1">
-                                        <img src="~/dist/img/good.png" id="Image" class="img-circle elevation-2 img-fluid" alt="User Image">
+                                        <img src="~/dist/img/good.png" id="Image" onclick="getValue('good')" class="img-circle elevation-2 img-fluid" alt="User Image">
                                     </div>
                                     <div class="image1">
-                                        <img src="~/dist/img/average.png"  id="Image" class="img-circle elevation-2 img-fluid" alt="User Image">
+                                        <img src="~/dist/img/average.png"  id="Image" onclick="getValue('average')" class="img-circle elevation-2 img-fluid" alt="User Image">
                                     </div>
                                     <div class="image1">
-                                        <img src="~/dist/img/poor.png" id="Image" class="img-circle elevation-2 img-fluid" alt="User Image">
+                                        <img src="~/dist/img/poor.png" id="Image" onclick="getValue('poor')" class="img-circle elevation-2 img-fluid" alt="User Image">
                                     </div>
                                 </div>
                             </div>
@@ -193,7 +332,7 @@ var DivShow = function(j){
                             }
                              else{
                                <div class="card-footer bg-white text-right">
-                                    <button type="button" onclick="submit()" class="btn  btn-primary" id="smt">Submit</button>
+                                    <button type="button" onclick="submit(@i)" class="btn  btn-primary" id="smt">Submit</button>
                                 </div>
                             }
                          
@@ -209,10 +348,11 @@ var DivShow = function(j){
                         <div class="card" >
                             <div class="card-header bg-white">
                                 <h5>@item.Description</h5>
+                                <input type="hidden" id=@quesid value="@item.Id" />
                             </div>
                             <div class="card-body">
                                 <div class="col-sm-8">
-                                    <input type="text" name="" class="form-control" id="Name" placeholder="name" />
+                                    <input type="text" name="" class="form-control" id=@Name placeholder="name" />
                                 </div>
                             </div>
                           @if (i< @ViewBag.AnswerData)
@@ -223,7 +363,7 @@ var DivShow = function(j){
                             }
                              else{
                                <div class="card-footer bg-white text-right">
-                                    <button  type="button"  class="btn  btn-primary" id="smt">Submit</button>
+                                    <button type="button" onclick="submit(@i)" class="btn  btn-primary" id="smt">Submit</button>
                                 </div>
                             }
                         </div>
@@ -239,10 +379,11 @@ var DivShow = function(j){
                         <div class="card">
                             <div class="card-header bg-white">
                                 <h5>@item.Description</h5>
+                                <input type="hidden" id=@quesid value="@item.Id" />
                             </div>
                             <div class="card-body">
                                 <div class="col-sm-8">
-                                    <input type="text" name="" id="Email" class="form-control" placeholder="email" />
+                                    <input type="text" name="" id=@Email class="form-control" placeholder="email" />
                                 </div>
                             </div>
                            @if (i< @ViewBag.AnswerData)
@@ -253,7 +394,7 @@ var DivShow = function(j){
                             }
                              else{
                                <div class="card-footer bg-white text-right">
-                                    <button type="button" onclick="submit()" class="btn  btn-primary" id="smt">Submit</button>
+                                    <button type="button" onclick="submit(@i)" class="btn  btn-primary" id="smt">Submit</button>
                                 </div>
                             }
                         </div>
@@ -269,10 +410,11 @@ var DivShow = function(j){
                         <div class="card">
                             <div class="card-header bg-white">
                                 <h5>@item.Description</h5>
+                                <input type="hidden" id=@quesid value="@item.Id" />
                             </div>
                             <div class="card-body">
                                 <div class="col-sm-8">
-                                    <input type="text" name="" id="Mobile" class="form-control" placeholder="mobile" />
+                                    <input type="text" name="" id=@Mobile class="form-control" placeholder="mobile" />
                                 </div>
                             </div>
                           @if (i< @ViewBag.AnswerData)
@@ -283,7 +425,7 @@ var DivShow = function(j){
                             }
                              else{
                                <div class="card-footer bg-white text-right">
-                                    <button type="button" onclick="submit()" class="btn  btn-primary" id="smt">Submit</button>
+                                    <button type="button" onclick="submit(@i)" class="btn  btn-primary" id="smt">Submit</button>
                                 </div>
                             }
                         </div>
@@ -299,11 +441,12 @@ var DivShow = function(j){
                         <div class="card"  >
                             <div class="card-header bg-white">
                                 <h5>@item.Description</h5>
+                                <input type="hidden" id=@quesid value="@item.Id" />
                             </div>
                             <div class="card-body">
 
                                 <div class="col-md-9 ">
-                                    <textarea class="form-control" id="Description" rows="3" placeholder="@item.Description"></textarea>
+                                    <textarea class="form-control" id=@Description rows="3" placeholder="@item.Description"></textarea>
                                 </div>
                             </div>
                           @if (i<@ViewBag.AnswerData)
@@ -314,7 +457,7 @@ var DivShow = function(j){
                             }
                              else{
                                <div class="card-footer bg-white text-right">
-                                    <button  type="button"  class="btn  btn-primary" id="smt">Submit</button>
+                                    <button type="button" onclick="submit(@i)" class="btn  btn-primary" id="smt">Submit</button>
                                 </div>
                             }
                         </div>
@@ -322,6 +465,7 @@ var DivShow = function(j){
                     </div>
                 </div>
             }
+
             else
             {
                 <input type="hidden" id=@hidd value="@item.AnswerType" />
@@ -330,13 +474,14 @@ var DivShow = function(j){
                         <div class="card">
                             <div class="card-header bg-white">
                                 <h5>@item.Description</h5>
+                                <input type="hidden" id=@quesid value="@item.Id" />
                             </div>
                             <div class="card-body">
 
                                 @foreach (var item1 in item.answerResonpes)
                                 {
-                                    <div class="form-check">
-                                        <input type="checkbox" id="CheckBox" class="form-check-input" value="">@item1.OpetionText
+                                    <div class="form-check" id=@Div>
+                                        <input type="checkbox" id="CheckBox" name="type" class="form-check-input" value=@item1.OpetionText>@item1.OpetionText
                                         <br>
                                     </div>
 
@@ -350,7 +495,7 @@ var DivShow = function(j){
                             }
                             else{
                                <div class="card-footer bg-white text-right">
-                                    <button type="button" onclick="submit()" class="btn  btn-primary" id="smt">Submit</button>
+                                    <button type="button" onclick="submit(@i)" class="btn  btn-primary" id="smt">Submit</button>
                                 </div>
                             }
                         </div>

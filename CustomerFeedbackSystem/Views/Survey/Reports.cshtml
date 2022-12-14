@@ -1,0 +1,64 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="card">
+    <div class="card-header">Filter</div>
+    <div class="card-body">
+
+        @using (Html.BeginForm("Reports", "Survey", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-3">
+            <input type="text" name="SurveyName" class="form-control" placeholder="Please enter Survey Name" />
+            </div>
+                <div class="col-3">
+            <input type="text" name="Location" class="form-control" placeholder="Pleace enter Location Name" />
+            </div>
+                <div class="col-2">
+            <input type="date" class="form-control" name="StartDate"/>
+            </div>
+                <div class="col-2">
+                    <input type="date" class="form-control" name="EndDate" />
+            </div>
+                <div class="col-2">
+            <input type="submit" class="form-control" value="search" />
+            </div>
+            </div>  
+        }
+
+
+    </div>
+    <div class="card-footer">
+    </div>
+</div>
+
+
+                    <table id="example1" class="table table-bordered table-striped">
+        <tr>
+            <th>Question</th>
+            <th>Answer</th>
+        </tr>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.QuestionText</td>
+                    <td>@item.AnswerText</td>
+                </tr>
+            }
+        }
+    </table>

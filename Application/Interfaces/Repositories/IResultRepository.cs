@@ -11,9 +11,8 @@ namespace Application.Interfaces.Repositories
 {
     public interface IResultRepository
     {
-        IQueryable<Result> Results { get; }
+        Task<List<ResultInfo>> GetListAsync();
 
-        Task<List<Result>> GetListAsync();
 
         Task<Result> GetByIdAsync(long resultId);
 

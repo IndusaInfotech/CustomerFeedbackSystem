@@ -38,19 +38,10 @@ namespace CustomerFeedbackSystem.Controllers
           
         }
 
-
-
-
-
-
-
         public IActionResult Index()
         {
          
-            
-
-            return View();
-       
+            return View();  
            
         }
         public IActionResult AddQuestion(int SurveyId, long? questionId)
@@ -81,11 +72,6 @@ namespace CustomerFeedbackSystem.Controllers
 
 
             });
-
-
-
-
-
 
 
             #region ViewBag
@@ -208,6 +194,7 @@ namespace CustomerFeedbackSystem.Controllers
                 questionInfo.Description = x.Description;
                 questionInfo.NumberOfPage = x.NumberOfPage;
                 questionInfo.AnswerType = x.AnswerType;
+                questionInfo.Id = x.Id;
                 if (questionInfo.AnswerType == 1 || questionInfo.AnswerType == 7)
                 {
                     var answers = AnswerList.Result.Where(m => m.QuestionId == x.Id);
@@ -240,22 +227,57 @@ namespace CustomerFeedbackSystem.Controllers
             ViewBag.SurveyData = Survey;
             return View();
         }
-
-        public IActionResult SaveAnswer(ResultInfos result)
+        public IActionResult ShowResult(string Guied,String Survey)
+        {
+            var results = _reultRepository.GetListAsync().Result.Where(x => x.GuidId == Guied);
+            ViewBag.SurveyData = Survey;
+            return View(results);
+        }
+        public JsonResult SaveAnswer(ResultInfos result)
         {
 
-            ResultInfo result1 = new ResultInfo();
-            result1.AnswerId = result.AnswerId;
-            result1.QuestionId = result.QuestionId;
-            result1.CreatedOn = DateTime.Now;
-            var Data = _reultRepository.InsertAsync(result1);
-            return new JsonResult(new { message = "Error Messages" })
+            if(result.GuidId=="" || result.GuidId == null)
             {
-                StatusCode = StatusCodes.Status400BadRequest
-            };
+                Guid guid = Guid.NewGuid();
+                result.GuidId = guid.ToString();
+            }
+
+
+            ResultInfo result1 = new ResultInfo();
+            result1.SurveyId = result.SurveyId;
+            result1.QuestionId = result.QuestionId;
+            result1.AnswerText = result.AnswerText;
+            result1.QuestionType = result.QuestionType;
+            result1.CreatedOn = DateTime.Now;
+            result1.QuestionText = result.QuestionText;
+            result1.GuidId = result.GuidId;          
+            var Data = _reultRepository.InsertAsync(result1);
+            if (Data.Id == null)
+            {
+                return new JsonResult(new { message = "Error Messages" })
+                {
+                    StatusCode = StatusCodes.Status400BadRequest
+                };
+            }
+            else
+            {
+                return new JsonResult(new { message = result.GuidId})
+                {
+                    StatusCode = StatusCodes.Status200OK
+                };
+            }
         }
 
+        public IActionResult SaveSurvey(ResultInfo obj)
+        {
 
+            return new  JsonResult(new {message="done"});
+
+        }
+        public IActionResult MainReports()
+        {
+            return View();
+        }
 
     }
 }

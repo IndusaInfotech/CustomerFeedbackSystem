@@ -13,5 +13,6 @@ namespace Application.Interfaces.Repositories
         Task<long> InsertAnswerAsync(List<Answer> answers);
         Task<long> InsertAsync(Answer answer); 
         Task<List<AnswerInfo>> GetByIdAsync(long? questionId);
+       
     }
 }

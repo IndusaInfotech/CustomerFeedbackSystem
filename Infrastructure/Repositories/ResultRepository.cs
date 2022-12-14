@@ -23,10 +23,7 @@ namespace Infrastructure.Repositories
             _repository = repository;
         }
 
-        public IQueryable<ResultInfo> Results => _repository.Entities;
-
-        IQueryable<AspNetCoreHero.Results.Result> IResultRepository.Results => throw new NotImplementedException();
-
+     
         public async Task DeleteAsync(ResultInfo result)
         {
             await _repository.DeleteAsync(result);
@@ -42,6 +39,9 @@ namespace Infrastructure.Repositories
         {
             return await _repository.Entities.ToListAsync();
         }
+
+       
+
         public async Task<long> InsertAsync(ResultInfo result)
         {
             await _repository.AddAsync(result);
@@ -63,9 +63,6 @@ namespace Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        Task<List<Result>> IResultRepository.GetListAsync()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

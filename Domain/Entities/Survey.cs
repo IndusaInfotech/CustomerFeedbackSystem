@@ -15,6 +15,7 @@ namespace Domain.Entities
         public string Description { get; set; }
         [StringLength(500)]
         public string Title { get; set; }
+        public string Location { get; set; }
         public int NumberOfPage { get; set; }
         public string Images { get; set; }
         public bool IsActive { get; set; }
